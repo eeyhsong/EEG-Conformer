@@ -4,7 +4,7 @@
 ##### Core idea: spatial-temporal conv + pooling + self-attention
 
 ## Abstract
-![Network Architecture](/EEG-Conformer/visualization/Fig1.png)
+![Network Architecture](/visualization/Fig1.png)
 
 - We propose a compact convolutional Transformer, named EEG Conformer, to encapsulate local and global features in a unified EEG classification framework.  
 - The convolution module learns the low-level local features throughout the one-dimensional temporal and spatial convolution layers. The self-attention module is straightforwardly connected to extract the global correlation within the local temporal features. Subsequently, the simple classifier module based on fully-connected layers is followed to predict the categories for EEG signals. 
