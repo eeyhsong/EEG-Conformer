@@ -216,14 +216,10 @@ class ExGAN():
         super(ExGAN, self).__init__()
         self.batch_size = 72
         self.n_epochs = 2000
-        self.img_height = 22
-        self.img_width = 600
-        self.channels = 1
         self.c_dim = 4
         self.lr = 0.0002
         self.b1 = 0.5
         self.b2 = 0.999
-        self.alpha = 0.0002
         self.dimension = (190, 50)
         self.nSub = nsub
 
@@ -232,7 +228,6 @@ class ExGAN():
 
         self.log_write = open("./results/log_subject%d.txt" % self.nSub, "w")
 
-        self.img_shape = (self.channels, self.img_height, self.img_width)
 
         self.Tensor = torch.cuda.FloatTensor
         self.LongTensor = torch.cuda.LongTensor
@@ -246,7 +241,6 @@ class ExGAN():
         self.model = self.model.cuda()
         # summary(self.model, (1, 22, 1000))
 
-        self.centers = {}
 
     # Segmentation and Reconstruction (S&R) data augmentation
     def interaug(self, timg, label):  
@@ -315,6 +309,7 @@ class ExGAN():
         self.allData = (self.allData - target_mean) / target_std
         self.testData = (self.testData - target_mean) / target_std
 
+        # data shape: (trial, conv channel, electrode channel, time samples)
         return self.allData, self.allLabel, self.testData, self.testLabel
 
 
@@ -350,7 +345,7 @@ class ExGAN():
         curr_lr = self.lr
 
         for e in range(self.n_epochs):
-            in_epoch = time.time()
+            # in_epoch = time.time()
             self.model.train()
             for i, (img, label) in enumerate(self.dataloader):
 
@@ -372,7 +367,7 @@ class ExGAN():
                 self.optimizer.step()
 
 
-            out_epoch = time.time()
+            # out_epoch = time.time()
 
 
             # test process

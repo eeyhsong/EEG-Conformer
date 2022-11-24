@@ -74,36 +74,13 @@ class ViT(nn.Sequential):
             # ... the model
         )
 
-# test the class activity map of convolutional layer 
-# without einops 
+
 data = np.load('./grad_cam/train_data.npy')  
-test = torch.as_tensor(data[:1, :, :, :], dtype=torch.float32)  # # the data used for visualization, which will be processed by saved model
-test = torch.autograd.Variable(test, requires_grad=True)
 print(np.shape(data))
 
 
-device = torch.device("cpu")
-model = ViT()
-model.load_state_dict(torch.load('./model/model_cnn.pth', map_location=device))
-target_layers = [model[0].projection]  # set the layer you want to visualize, you can use torchsummary here to find the layer index
-cam = GradCAM(model=model, target_layers=target_layers, use_cuda=False)
-
+nSub = 1
 target_category = 2  # set the class (class activation mapping)
-grayscale_cam = cam(input_tensor=test)
-
-
-nptest = test.cpu().detach().numpy()
-nptest = (nptest - np.min(nptest)) / (np.max(nptest) - np.min(nptest))  # use normal or standard for better plot
-grayscale_cam = grayscale_cam[0, :]
-visualization = show_cam_on_image(nptest, grayscale_cam, use_rgb=True)
-
-
-plt.figure(figsize=(6, 0.5), dpi=1200)
-plt.imshow(grayscale_cam, aspect='auto', cmap='RdBu_r')
-plt.colorbar()
-
-
-# test the class activity map of transformer layer 
 
 # ! A crucial step for adaptation on Transformer
 # reshape_transform  b 61 40 -> b 40 1 61
@@ -114,27 +91,15 @@ def reshape_transform(tensor):
 
 device = torch.device("cpu")
 model = ViT()
+
+# # used for cnn model without transformer
+# model.load_state_dict(torch.load('./model/model_cnn.pth', map_location=device))
+# target_layers = [model[0].projection]  # set the layer you want to visualize, you can use torchsummary here to find the layer index
+# cam = GradCAM(model=model, target_layers=target_layers, use_cuda=False)
+
 model.load_state_dict(torch.load('./model/sub%d.pth'%nSub, map_location=device))
 target_layers = [model[1]]  # set the target layer 
-
 cam = GradCAM(model=model, target_layers=target_layers, use_cuda=False, reshape_transform=reshape_transform)
-
-grayscale_cam = cam(input_tensor=test)
-
-# nptest = test.cpu().detach().numpy()
-# nptest = (nptest - np.min(nptest)) / (np.max(nptest) - np.min(nptest))
-grayscale_cam = grayscale_cam[0, :]
-
-
-plt.figure(figsize=(6, 0.8), dpi=600)
-plt.imshow(grayscale_cam, aspect='auto', cmap='RdBu_r')
-cb = plt.colorbar(aspect=10)
-cb.set_ticks([0, 0.5, 1])
-
-plt.xticks([])
-plt.xlabel('Time')
-plt.yticks([])
-plt.ylabel('Channel')
 
 
 
@@ -143,7 +108,7 @@ import mne
 from matplotlib import mlab as mlab
 
 biosemi_montage = mne.channels.make_standard_montage('biosemi64')
-index = [37, 9, 10, 46, 45, 44, 13, 12, 11, 47, 48, 49, 50, 17, 18, 31, 55, 54, 19, 30, 56, 29]
+index = [37, 9, 10, 46, 45, 44, 13, 12, 11, 47, 48, 49, 50, 17, 18, 31, 55, 54, 19, 30, 56, 29]  # for bci competition iv 2a
 biosemi_montage.ch_names = [biosemi_montage.ch_names[i] for i in index]
 biosemi_montage.dig = [biosemi_montage.dig[i+3] for i in index]
 info = mne.create_info(ch_names=biosemi_montage.ch_names, sfreq=250., ch_types='eeg')
@@ -178,21 +143,15 @@ mean_hyb_all = np.mean(hyb_all, axis=1)
 evoked = mne.EvokedArray(test_all_data, info)
 evoked.set_montage(biosemi_montage)
 
-fig, [ax1, ax2, ax3] = plt.subplots(nrows=3)
+fig, [ax1, ax2] = plt.subplots(nrows=2)
 
 # print(mean_all_test)
-plt.subplot(311)
+plt.subplot(211)
 im1, cn1 = mne.viz.plot_topomap(mean_all_test, evoked.info, show=False, axes=ax1, res=1200)
 
-plt.subplot(312)
-# draw EEG data in a circle type, color corresponds to value
-size = np.ones(1000)
-cam_bar = np.mean(test_all_cam, axis=0)
-cycle_cam = (cam_bar - np.min(cam_bar)) / (np.max(cam_bar) - np.min(cam_bar))
-plt.pie(size, colors=plt.cm.RdBu_r(cycle_cam), wedgeprops=dict(width=0.2), startangle=90, counterclock=False)
 
-plt.subplot(313)
-im3, cn3 = mne.viz.plot_topomap(mean_hyb_all, evoked.info, show=False, axes=ax3)
+plt.subplot(212)
+im2, cn2 = mne.viz.plot_topomap(mean_hyb_all, evoked.info, show=False, axes=ax2, res=1200)
 
 
 
