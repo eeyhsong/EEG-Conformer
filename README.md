@@ -17,9 +17,9 @@
 
 
 ## Datasets
-- [BCI_competition_IV2a](https://www.bbci.de/competition/iv/)
-- [BCI_competition_IV2b](https://www.bbci.de/competition/iv/)
-- [SEED](https://bcmi.sjtu.edu.cn/home/seed/seed.html)
+- [BCI_competition_IV2a](https://www.bbci.de/competition/iv/) - acc 78.66% (hold out)
+- [BCI_competition_IV2b](https://www.bbci.de/competition/iv/) - acc 84.63% (hold out)
+- [SEED](https://bcmi.sjtu.edu.cn/home/seed/seed.html) - acc 95.30% (5-fold)
 
 
 ## Citation
