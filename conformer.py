@@ -201,7 +201,7 @@ class ClassificationHead(nn.Sequential):
         return x, out
 
 
-class ViT(nn.Sequential):
+class Conformer(nn.Sequential):
     def __init__(self, emb_size=40, depth=6, n_classes=4, **kwargs):
         super().__init__(
 
@@ -211,9 +211,9 @@ class ViT(nn.Sequential):
         )
 
 
-class ExGAN():
+class ExP():
     def __init__(self, nsub):
-        super(ExGAN, self).__init__()
+        super(ExP, self).__init__()
         self.batch_size = 72
         self.n_epochs = 2000
         self.c_dim = 4
@@ -236,7 +236,7 @@ class ExGAN():
         self.criterion_l2 = torch.nn.MSELoss().cuda()
         self.criterion_cls = torch.nn.CrossEntropyLoss().cuda()
 
-        self.model = ViT().cuda()
+        self.model = Conformer().cuda()
         self.model = nn.DataParallel(self.model, device_ids=[i for i in range(len(gpus))])
         self.model = self.model.cuda()
         # summary(self.model, (1, 22, 1000))
@@ -427,9 +427,9 @@ def main():
 
 
         print('Subject %d' % (i+1))
-        exgan = ExGAN(i + 1)
+        exp = ExP(i + 1)
 
-        bestAcc, averAcc, Y_true, Y_pred = exgan.train()
+        bestAcc, averAcc, Y_true, Y_pred = exp.train()
         print('THE BEST ACCURACY IS ' + str(bestAcc))
         result_write.write('Subject ' + str(i + 1) + ' : ' + 'Seed is: ' + str(seed_n) + "\n")
         result_write.write('Subject ' + str(i + 1) + ' : ' + 'The best accuracy is: ' + str(bestAcc) + "\n")
