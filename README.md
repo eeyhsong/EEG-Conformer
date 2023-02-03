@@ -23,7 +23,7 @@
 
 
 ## Citation
-Hope this code can be useful. I would be very appreciate if you cite us in your paper. 😄
+Hope this code can be useful. I would be very appreciate if you cite us in your paper. 😊
 ```
 @article{song2023eeg,
   title = {{{EEG Conformer}}: {{Convolutional Transformer}} for {{EEG Decoding}} and {{Visualization}}},
