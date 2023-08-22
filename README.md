@@ -6,12 +6,12 @@
 ## Abstract
 ![Network Architecture](/visualization/Fig1.png)
 
-- We propose a compact convolutional Transformer, named EEG Conformer, to encapsulate local and global features in a unified EEG classification framework.  
+- We propose a compact convolutional Transformer, EEG Conformer, to encapsulate local and global features in a unified EEG classification framework.  
 - The convolution module learns the low-level local features throughout the one-dimensional temporal and spatial convolution layers. The self-attention module is straightforwardly connected to extract the global correlation within the local temporal features. Subsequently, the simple classifier module based on fully-connected layers is followed to predict the categories for EEG signals. 
 - We also devise a visualization strategy to project the class activation mapping onto the brain topography.
 
 
-## Requirmenets:
+## Requirements:
 - Python 3.10
 - Pytorch 1.12
 
@@ -23,7 +23,7 @@
 
 
 ## Citation
-Hope this code can be useful. I would be very appreciate if you cite us in your paper. 😊
+Hope this code can be useful. I would appreciate you citing us in your paper. 😊
 ```
 @article{song2023eeg,
   title = {{{EEG Conformer}}: {{Convolutional Transformer}} for {{EEG Decoding}} and {{Visualization}}},
