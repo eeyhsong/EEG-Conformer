@@ -3,7 +3,9 @@
 ### EEG Conformer: Convolutional Transformer for EEG Decoding and Visualization [[Paper](https://ieeexplore.ieee.org/document/9991178)]
 ##### Core idea: spatial-temporal conv + pooling + self-attention
 
+### News
 🎉🎉🎉 We've joined in [braindecode](https://braindecode.org/stable/index.html) toolbox. You can directly use [here](https://braindecode.org/dev/generated/braindecode.models.EEGConformer.html).
+
 
 Thanks to [Bru](https://github.com/bruAristimunha) and colleagues for helping with the modifications.
 
