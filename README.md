@@ -4,7 +4,7 @@
 ##### Core idea: spatial-temporal conv + pooling + self-attention
 
 ### News
-🎉🎉🎉 We've joined in [braindecode](https://braindecode.org/stable/index.html) toolbox. Use [here](https://braindecode.org/dev/generated/braindecode.models.EEGConformer.html).
+🎉🎉🎉 We've joined in [braindecode](https://braindecode.org/stable/index.html) toolbox. Use [here](https://braindecode.org/stable/generated/braindecode.models.EEGConformer.html) for detailed info.
 
 
 Thanks to [Bru](https://github.com/bruAristimunha) and colleagues for helping with the modifications.
@@ -23,6 +23,7 @@ Thanks to [Bru](https://github.com/bruAristimunha) and colleagues for helping wi
 
 
 ## Datasets
+Please use same train-val-test split when comparing with other methods.
 - [BCI_competition_IV2a](https://www.bbci.de/competition/iv/) - acc 78.66% (hold out)
 - [BCI_competition_IV2b](https://www.bbci.de/competition/iv/) - acc 84.63% (hold out)
 - [SEED](https://bcmi.sjtu.edu.cn/home/seed/seed.html) - acc 95.30% (5-fold)
