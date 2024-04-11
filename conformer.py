@@ -273,6 +273,8 @@ class ExP():
         return aug_data, aug_label
 
     def get_source_data(self):
+        # ! please please recheck if you need validation set 
+        # ! and the data segement compared methods used
 
         # train data
         self.total_data = scipy.io.loadmat(self.root + 'A0%dT.mat' % self.nSub)
